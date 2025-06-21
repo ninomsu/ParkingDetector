@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9999:9999"
+    command:
+      - --web.listen-address=:9999
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/loki-config.yaml
+    volumes:
+      - ./configs/loki-config.yaml:/etc/loki/loki-config.yaml
+      - loki-data:/loki
+      - ./loki-wal:/wal
+
+  tempo:
+    image: grafana/tempo:latest
+    ports:
+      - "3200:3200"
+    command: ["--config.file=/etc/tempo/tempo.yaml"]
+    volumes:
+      - ./configs/tempo.yaml:/etc/tempo/tempo.yaml
+      - ./tempo-data:/tmp/tempo
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    command: ["--config=/etc/otelcol-contrib/otelcol.yaml"]
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+    volumes:
+      - ./configs/otelcol.yaml:/etc/otelcol-contrib/otelcol.yaml
+
+volumes:
+  grafana-storage:
+  prometheus-data:
+  loki-data:
+  tempo-data:

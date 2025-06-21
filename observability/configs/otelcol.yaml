@@ -1,0 +1,49 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: "0.0.0.0:4317"
+      http:
+        endpoint: "0.0.0.0:4318"
+
+exporters:
+  debug:
+    verbosity: detailed
+
+  prometheus:
+    endpoint: "0.0.0.0:9999"
+
+  loki:
+    endpoint: http://192.168.86.22:3100/loki/api/v1/push
+    tls:
+      insecure: true
+
+  otlp/tempo:
+    endpoint: tempo:5517
+    tls:
+      insecure: true
+
+processors:
+  batch:
+
+  resource:
+    attributes:
+      - action: upsert
+        key: service.name
+        value: parking-detector
+
+service:
+  pipelines:
+    logs:
+      receivers: [otlp]
+      processors: [resource, batch]
+      exporters: [debug, loki]
+
+    metrics:
+      receivers: [otlp]
+      exporters: [debug, prometheus]
+
+    traces:
+      receivers: [otlp]
+      processors: [resource, batch]
+      exporters: [debug, otlp/tempo]

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <mode>debug</mode>
+    <samples>30</samples>
+    <confidence>0.4</confidence>
+    <active_sleep_s>180</active_sleep_s>
+    <passive_sleep_s>300</passive_sleep_s>
+    <start_hour>11</start_hour>
+    <end_hour>21</end_hour>
+</config>

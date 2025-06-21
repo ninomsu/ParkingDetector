@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rois>
+    <roi>
+        <label>Left</label>
+        <x>230</x>
+        <y>270</y>
+        <width>140</width>
+        <height>150</height>
+    </roi>
+    <roi>
+        <label>Right</label>
+        <x>760</x>
+        <y>300</y>
+        <width>100</width>
+        <height>150</height>
+    </roi>
+</rois>
