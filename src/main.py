@@ -323,8 +323,10 @@ def handle_notifications_and_snapshots(rois, prev_states, current_states, base_f
 def main():
     # Create snapshots directory
     os.makedirs("snapshots", exist_ok=True)
-    
+
     config = load_config("./config.xml")
+
+    global MODE
     MODE = config.get("mode", "debug")
     samples = config.get("samples", 60)
     conf_threshold = config.get("confidence", 0.40)
