@@ -92,4 +92,4 @@ The system is fully **observable** — exposing logs, metrics, and traces — wh
 ## 📝 Notes
 
 - Make sure the Raspberry Pi and host machine are on the same network.
-- Observability are visible in Grafana, thanks to Loki, Prometheus, and Tempo integration.
+- Observability is visible in Grafana, thanks to Loki, Prometheus, and Tempo integration.
